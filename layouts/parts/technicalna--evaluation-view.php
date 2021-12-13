@@ -1,7 +1,7 @@
 <?php
 use MapasCulturais\i;
 ?>
-<div ng-controller="TechnicalEvaluationMethodFormController" class="technical-evaluation-form">
+<div ng-controller="TechnicalNaEvaluationMethodFormController" class="technical-evaluation-form">
     <div ng-if="!data.empty">
         <strong><?php i::_e('Pontuações'); ?>:</strong>
         <section ng-repeat="section in ::data.sections" ng-if="section.categories.indexOf(data.registrationCategory) != -1">

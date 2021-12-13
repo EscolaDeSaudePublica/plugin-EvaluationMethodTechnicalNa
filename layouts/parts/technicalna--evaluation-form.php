@@ -1,6 +1,6 @@
 <?php
 use MapasCulturais\i;
-$plugin = $app->plugins['EvaluationMethodTechnical'];
+$plugin = $app->plugins['EvaluationMethodTechnicalNa'];
 
 $params = ['registration' => $entity, 'opportunity' => $opportunity];
 //VERIFICA SE O AVALIADOR ENVIOU AS NOTAS
@@ -20,9 +20,9 @@ if($disabled == 'disabled') :
     <span>A avaliação já foi enviada. Não é possível alterar as notas.</span>
 </div>';
 endif;
-$this->applyTemplateHook('evaluationForm.technical', 'before', $params); ?>
-<div ng-controller="TechnicalEvaluationMethodFormController" class="technical-evaluation-form">
-    <?php $this->applyTemplateHook('evaluationForm.technical', 'begin', $params); ?>
+$this->applyTemplateHook('evaluationForm.technicalNa', 'before', $params); ?>
+<div ng-controller="TechnicalNaEvaluationMethodFormController" class="technical-evaluation-form">
+    <?php $this->applyTemplateHook('evaluationForm.technicalNa', 'begin', $params); ?>
     <div class="alert-evaluation-load" id="alert-evaluation-load-div">
         <span id="successEvaluationNote" class="load-evaluation-note">A avaliação foi salva</span>
     </div>
@@ -74,6 +74,6 @@ $this->applyTemplateHook('evaluationForm.technical', 'before', $params); ?>
         <?php i::_e('Pontuação Total'); ?>: <strong>{{total(total) == 'NaN' ? '---' : total(total)}}</strong><br>
         <?php i::_e('Pontuação Máxima'); ?>: <strong>{{max(total)}}</strong>
     </div>
-    <?php $this->applyTemplateHook('evaluationForm.technical', 'end', $params); ?>
+    <?php $this->applyTemplateHook('evaluationForm.technicalNa', 'end', $params); ?>
 </div>
-<?php $this->applyTemplateHook('evaluationForm.technical', 'after', $params); ?>
+<?php $this->applyTemplateHook('evaluationForm.technicalNa', 'after', $params); ?>
