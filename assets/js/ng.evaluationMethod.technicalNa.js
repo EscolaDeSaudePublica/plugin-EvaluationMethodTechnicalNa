@@ -26,7 +26,7 @@
             };
         }]);
 
-    module.controller('TechnicalEvaluationNaMethodConfigurationController', ['$scope', '$rootScope', '$timeout', 'TechnicalNaEvaluationMethodService', 'EditBox', function ($scope, $rootScope, $timeout, TechnicalNaEvaluationMethodService, EditBox) {
+    module.controller('TechnicalNaEvaluationMethodConfigurationController', ['$scope', '$rootScope', '$timeout', 'TechnicalNaEvaluationMethodService', 'EditBox', function ($scope, $rootScope, $timeout, TechnicalNaEvaluationMethodService, EditBox) {
             $scope.editbox = EditBox;
 
             var labels = MapasCulturais.gettext.technicalEvaluationMethod;
