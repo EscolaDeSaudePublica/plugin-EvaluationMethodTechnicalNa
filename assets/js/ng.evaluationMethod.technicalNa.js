@@ -26,7 +26,7 @@
             };
         }]);
 
-    module.controller('TechnicalNaEvaluationMethodConfigurationController', ['$scope', '$rootScope', '$timeout', 'TechnicalNaEvaluationMethodService', 'EditBox', function ($scope, $rootScope, $timeout, TechnicalNaEvaluationMethodService, EditBox) {
+    module.controller('TechnicalEvaluationNaMethodConfigurationController', ['$scope', '$rootScope', '$timeout', 'TechnicalNaEvaluationMethodService', 'EditBox', function ($scope, $rootScope, $timeout, TechnicalNaEvaluationMethodService, EditBox) {
             $scope.editbox = EditBox;
 
             var labels = MapasCulturais.gettext.technicalEvaluationMethod;
@@ -213,100 +213,45 @@
                 var na = $scope.na ?? [];
                 var totalWeight = 0;
 
-                if($scope.data.sections.length == 1){
-                    for(var i in $scope.data.criteria){
-                        var cri = $scope.data.criteria[i];
-                        if((Object.keys(na) > 0 && na[cri.id]) || ($scope.evaluation[cri.id] == undefined) || Number.isNaN($scope.evaluation[cri.id])){
-                            continue;
-                        }
-                        total += $scope.evaluation[cri.id] * cri.weight;
-                        totalWeight += cri.weight;
-                    }
-                    var notaTotal = total / totalWeight;
-                    return Number.isNaN(notaTotal) ? 0: notaTotal.toFixed(2);
-                };
-
                 for(var i in $scope.data.criteria){
                     var cri = $scope.data.criteria[i];
-                    if((cri.sid == section.id) && ($scope.evaluation[cri.id] != undefined) && !Number.isNaN($scope.evaluation[cri.id])){
-                        total += $scope.evaluation[cri.id] * cri.weight;
+                    if((Object.keys(na) > 0 && na[cri.id]) || ($scope.evaluation[cri.id] == undefined) || Number.isNaN($scope.evaluation[cri.id])){
+                        continue;
                     }
+                    total += $scope.evaluation[cri.id] * cri.weight;
+                    totalWeight += cri.weight;
                 }
-                return Number.isNaN(total) ? 0: total;
+                var notaTotal = total / totalWeight;
+                return Number.isNaN(notaTotal) ? 0: notaTotal.toFixed(2);
             };
 
             $scope.total = function(){
                 var total = 0;
-                var totalWeight = 0;
 
                 for(var sec in $scope.data.sections){
                     var section = $scope.data.sections[sec];
-
                     if (typeof section.categories != 'undefined' && section.categories.indexOf($scope.data.registrationCategory) == -1) {
                         continue;
                     }
-                    
-                    var subtotal = $scope.subtotalSection(section);
-                    var sectionWeight = parseFloat(section.weight);
-                    
-                    if (sectionWeight > 0) {
-                        totalWeight += sectionWeight;
-                        subtotal = subtotal * sectionWeight;
-                    }
-
-                    total += subtotal;
+                    total = $scope.subtotalSection(section);
                 }
-
-                if (totalWeight) {
-                    total = total / totalWeight;
-                }                
-
-                return total.toFixed(2);
+                return total;
             };
 
             $scope.max = function(){
                 var total = 0;
                 var totalWeight = 0;
                 var na = $scope.evaluation.na ?? [];
-                
-                if($scope.data.sections.length == 1){
-                    for(var i in $scope.data.criteria){
-                        var cri = $scope.data.criteria[i];
-                        if(Object.keys(na) > 0 && na[cri.id]){
-                            continue;
-                        }
-                        total += cri.max * cri.weight;
-                        totalWeight += cri.weight;
-                    }
-                    return (total / totalWeight).toFixed(2);
-                };
 
-                for(var sec in $scope.data.sections){
-                    var section = $scope.data.sections[sec];
-
-                    if (typeof section.categories != 'undefined' && section.categories.indexOf($scope.data.registrationCategory) == -1) {
+                for(var i in $scope.data.criteria){
+                    var cri = $scope.data.criteria[i];
+                    if(Object.keys(na) > 0 && na[cri.id]){
                         continue;
                     }
-
-                    var subtotal = $scope.maxSection(section);
-
-                    var sectionWeight = parseFloat(section.weight);
-
-                    if (sectionWeight > 0) {
-                        totalWeight += sectionWeight;
-                        subtotal = subtotal * sectionWeight;
-                    }
-
-                    total += subtotal;
+                    total += cri.max * cri.weight;
+                    totalWeight += cri.weight;
                 }
-
-                
-
-                if (totalWeight > 0) {
-                    total = total / totalWeight;
-                }                
-
-                return total.toFixed(2);
+                return (total / totalWeight).toFixed(2);
             };
 
             $scope.checkTotal = function(num) {
