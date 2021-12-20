@@ -283,12 +283,10 @@ class Plugin extends \MapasCulturais\EvaluationMethod {
         }
 
         if ($qtdWeightTotal > 0) {
-            return $total / $qtdWeightTotal;
-        } else {
-            return $total;
+            $total = $total / $qtdWeightTotal;
         }
         
-        return $total;
+        return number_format($total, 2);
     }
     
     public function valueToString($value) {
